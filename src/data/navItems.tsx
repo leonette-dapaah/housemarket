@@ -1,14 +1,14 @@
 export const navbarItems = [
     {
         title: "Rent",
-        path: ""
+        path: "/features/buy"
     },
     {
         title: "Buy",
-        path: ""
+        path: "/features/buy"
     },
     {
         title: "Sell",
-        path: ""
+        path: "/features/faqs"
     }
 ];
