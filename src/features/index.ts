@@ -5,4 +5,4 @@ export { default as Buy } from "./buy";
 export { default as Fav } from "./favourites"
 export { default as PropertyDetails } from "./propertyDetails"
 export { default as MapInt } from "./map"
-// export { SignUpModal } from "./modals";
+export { default as Bookings } from "./bookings";

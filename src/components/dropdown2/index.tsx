@@ -37,12 +37,12 @@ const Dropdown2: React.FC = () => {
   };
 
   return (
-    <div className="lg:card w-full mt-[-336px] mb-0 px-8 py-4 bg-white z-10 fixed ml-[-50px] border-t-2 md:py-2">
-      <div className="dropdown-container flex flex-wrap gap-x-8 mt-[20px] ml-[90px]">
-        <div className="dropdown-item">
-          <div className="dropdown-label text-070058 font-medium text-black text-[20px]">Rent/Buy</div>
+    <div className=" lg:ml-[0px] lg:mt-[101px] mt-20 md:mt-[-70px] top-0 mb-0 bg-white absolute px-10 lg:px-6 py-12 w-full lg:w-full md:mt-[101px] md:mx-auto md:w-4/4 md:shadow-none">
+      <div className="invisible lg:visible md:visible flex flex-wrap justify-center lg:gap-x-8  lg:pl-0 md:pl-[20px] md:gap-x-20 md:gap-y-3 lg:gap-x-8 ">
+        <div>
+          <div className="text-070058 font-semibold">Rent/Buy</div>
           <select
-            className=" dropdown-select border rounded-md p-[12px] w-[200px] "
+            className="border rounded-md p-[12px] w-[200px] "
             value={selectedRent}
             onChange={handleRentChange}
           >
@@ -52,10 +52,10 @@ const Dropdown2: React.FC = () => {
           </select>
         </div>
 
-        <div className="dropdown-item">
-          <div className="dropdown-label text-070058 font-medium text-black text-[20px]">Property Type</div>
+        <div className=''>
+          <div className="text-070058 font-semibold">Property Type</div>
           <select
-            className="dropdown-select border rounded-md p-[12px] w-[200px]"
+            className=" border rounded-md p-[12px] w-[200px]"
             value={selectedApartment}
             onChange={handleApartmentChange}
           >
@@ -66,10 +66,10 @@ const Dropdown2: React.FC = () => {
           </select>
         </div>
 
-        <div className="dropdown-item">
-          <div className="dropdown-label text-070058 font-medium text-black text-[20px]">Location</div>
+        <div>
+          <div className="text-070058 font-semibold">Location</div>
           <select
-            className="dropdown-select border rounded-md p-[12px] w-[200px]"
+            className="border rounded-md p-[12px] w-[200px]"
             value={selectedLocation}
             onChange={handleLocationChange}
           >
@@ -79,10 +79,10 @@ const Dropdown2: React.FC = () => {
           </select>
         </div>
 
-        <div className="dropdown-item">
-          <div className="dropdown-label text-070058 font-medium text-black text-[20px]">Price Range</div>
+        <div>
+          <div className="text-070058 font-semibold ">Price Range</div>
           <select
-            className="dropdown-select border rounded-md p-[12px] w-[200px]"
+            className="border rounded-md p-[12px] w-[200px]"
             value={selectedPrice}
             onChange={handlePriceChange}
           >
@@ -92,10 +92,10 @@ const Dropdown2: React.FC = () => {
           </select>
         </div>
 
-        <div className="dropdown-item">
-          <div className="dropdown-label text-070058 font-bold text-black text-[20px]">Beds</div>
+        <div>
+          <div className="text-070058 font-semibold ">Beds</div>
           <select
-            className="dropdown-select border rounded-md p-[12px] w-[200px]"
+            className="border rounded-md p-[12px] w-[200px]"
             value={selectedBed}
             onChange={handleBedChange}
           >
@@ -106,10 +106,10 @@ const Dropdown2: React.FC = () => {
           </select>
         </div>
 
-        <div className="dropdown-item">
-          <div className="dropdown-label text-070058 font-medium text-black text-[20px]">Bathroom</div>
+        <div>
+          <div className="text-070058 font-semibold">Bathroom</div>
           <select
-            className=" dropdown-select border rounded-md p-[12px] w-[250px] "
+            className="border rounded-md p-[12px] w-[200px] "
             value={selectedBathroom}
             onChange={handleBathroomChange}
           >
@@ -120,14 +120,43 @@ const Dropdown2: React.FC = () => {
         </div>
 
         <button
-          className="search-button bg-yellow-300 p-2 w-[120px] h-[50px] mt-[25px]  rounded-md font-semibold  "
+          className="bg-yellow-300 p-2 lg:w-[175px] md:w-[200px] h-[50px] mt-[20px]  rounded-md font-semibold  "
           onClick={handleSearch}
         >
           SEARCH
         </button>
-        <button className='bg-white w-[135px] h-[50px] text-[#060F42] font-normal text-md border-2 border-[#070058] rounded cursor-pointer mt-32px ml-20px  mt-[25px]'>
+        <button className='md:mr-[-280px] lg:mr-0 bg-white lg:w-[175px] md:w-[200px] h-[50px] text-[#060F42] font-semibold text-md border-2 border-[#070058] rounded cursor-pointer mt-32px lg:ml-20px mt-[20px]'>
             MORE FILTERS
         </button>
+      </div>
+      <div className='visible lg:invisible md:invisible mt-[-300px]'>
+        <div className=' flex justify-between gap-x-3'>
+          <div>
+            <select
+              className="border rounded-md p-[12px] w-[125px] "
+              value={selectedRent}
+              onChange={handleRentChange}
+            >
+              <option value="Select Rent">Rent</option>
+              <option value="For Rent">For Rent</option>
+              <option value="Not For Rent">Not For Rent</option>
+            </select>
+          </div>
+          <div>
+            <select
+              className="border rounded-md p-[12px] w-[125px]"
+              value={selectedLocation}
+              onChange={handleLocationChange}
+            >
+              <option value="Select Location">Location</option>
+              <option value="Downtown">Downtown</option>
+              <option value="Suburb">Suburb</option>
+            </select>
+          </div>
+          <div>
+            <button className='py-3.5 bg-[#060F42] w-[125px] rounded text-white'>FILTERS</button>
+          </div>
+        </div>
       </div>
     </div>
   );

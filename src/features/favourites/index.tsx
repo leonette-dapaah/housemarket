@@ -40,7 +40,7 @@ const Fav: React.FC = () => {
       {/* Grey line under tabs */}
       <div className="border-b border-gray-300 mb-4 mt-4">
         {/* Active Tab Name */}
-        <h1 className="text-[34px] mb-4 capitalize text-[60px] font-faustina mb-[60px] ml-45px mt-[-50px] text-[#060F42]">
+        <h1 className="text-[34px] mb-4 capitalize text-[50px] font-faustina mb-[60px] ml-45px mt-[-50px] text-[#060F42] lg:text-[60px]">
           {activeTab === 'account' ? 'Account Settings' : activeTab}
         </h1>
 
@@ -78,7 +78,7 @@ const Fav: React.FC = () => {
       </div>
       {/* Account content */}
       <div id="content-account" className={`tab-content ${activeTab !== 'account' ? 'hidden' : ''}`}>
-        <p className='mt-[40px] text-[40px] font-faustina'>Personal Information.</p>
+        <p className='mt-[40px] text-[30px] font-faustina lg:text-[40px] mb-[30px]'>Personal Information</p>
         <form>
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">
@@ -91,7 +91,7 @@ const Fav: React.FC = () => {
               placeholder="Name"
               value={formData.name}
               onChange={handleInputChange}
-              className="border border-gray-300 p-2 w-[420px]"
+              className="border border-gray-300 p-2 w-96 lg:w-[420px] rounded-lg"
             />
           </div>
           <div className="mb-4">
@@ -105,7 +105,7 @@ const Fav: React.FC = () => {
               placeholder="Email"
               value={formData.email}
               onChange={handleInputChange}
-              className="border border-gray-300 p-2 w-[420px] "
+              className="border border-gray-300 p-2 w-96 lg:w-[420px] rounded-lg"
             />
           </div>
           <div className="mb-4">
@@ -119,11 +119,11 @@ const Fav: React.FC = () => {
               placeholder="Number"
               value={formData.number}
               onChange={handleInputChange}
-              className="border border-gray-300 p-2 w-[420px]"
+              className="border border-gray-300 p-2 w-96 lg:w-[420px] rounded-lg"
             />
           </div>
         </form>
-        <h1  className='mt-[50px] font-faustina text-[40px]'>Sign in & Security</h1>
+        <h1  className='mt-[50px] font-faustina text-[30px] lg:text-[40px]'>Sign in & Security</h1>
         <div className='flex justify space between gap-[1280px] border-b border-gray-300'>
           <div>
             <p  className='text-[20px] font-semibold mt-[50px]'>Email</p>
@@ -137,7 +137,7 @@ const Fav: React.FC = () => {
         <div className='flex justify space between gap-[1180px] border-b border-gray-300'>
           <div>
             <p className='text-[20px] font-semibold mt-[50px]'>Password</p>
-            <p className='lg:text-gray-400 md:w-[500px] md:text-gray-400 '>Set a unique password to protect your account</p>
+            <p className='lg:text-gray-400 md:w-[500px] md:text-gray-400 w-full'>Set a unique password to protect your account</p>
           </div>
           <div>
             <button className='lg:ml-[-153px] p-4 text-[#070058] bg-white lg:mt-[25px] border-2 border-primary focus:outline-none focus:border-[#070058] rounded w-[200px] font-bold md:ml-[-1020px] md:mt-[35px]'>CREATE PASSWORD</button>

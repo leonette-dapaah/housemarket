@@ -2,16 +2,25 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { FaApple } from "react-icons/fa";
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { Vortex } from "react-loader-spinner";
+import 'react-toastify/dist/ReactToastify.css';
 
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const modalRef = useRef(null);
+  const [ isLoading, setIsLoading ] = useState(false);
+
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -29,16 +38,46 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     };
   }, [isOpen, onClose]);
 
-  const handleLogin = () => {
-    // Add your sign-up logic here
-    console.log('Logging in with:', email, password);
-    // You can make an API call or perform any other sign-up actions
-    // ...
+  console.log(isOpen);
 
-    // Close the modal after sign-up
-    onClose();
+  const handleLogin = async () => {
+    setIsLoading(true)
+    const payload = {
+      username: email,
+      password: password,
+      
+    }
+    console.log(payload);
+    try {
+      const response = await axios.post(`${apiUrl}/login`, 
+      payload,
+      {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      }
+      );
+      
+      console.log({response});
+      // console.log(response.data);
+      // Store User Data in LocalStorage
+      localStorage["user_key"] = response.data.access_token;
+      localStorage["user_key_type"] = response.data.token_type;
+      localStorage["user_email"] = response.data.user.email;
+      localStorage["user_name"] = response.data.user.first_name +' '+response.data.user.last_name;
+      localStorage["user_img"] = response.data.user.profileimg;
+      
+      setIsLoggedIn(true);
+      toast.success('You have successfully Logged into your account!')
+      onClose();
+
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      console.error('Login failed:', errorMessage);
+      toast.error("Sorry, something went wrong. Please try again later.");
+    }
+    finally{
+      setIsLoading(false);
+    }
   };
-
   return (
     <div
       className={`fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center ${
@@ -73,8 +112,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
             type="button" // Assuming this is not a form submission
             onClick={handleLogin}
             style={{ backgroundColor: '#060F43' }}
-            className=" mt-[30px] text-white p-3 rounded-md cursor-pointer w-full"
+            className=" mt-[30px] text-white p-3 rounded-md cursor-pointer w-full flex items-center justify-center gap-2"
           >
+            {isLoading && <Vortex height={'25'} width={'25'} />}
             Sign In
           </button>
           <button

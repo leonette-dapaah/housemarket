@@ -10,5 +10,9 @@ export const navbarItems = [
     {
         title: "Sell",
         path: "/features/faqs"
+    },
+    {
+        title: "Bookings",
+        path: "/features/bookings"
     }
 ];

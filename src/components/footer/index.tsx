@@ -6,10 +6,10 @@ import { AiOutlineTwitter } from "react-icons/ai"
 import { AiFillLinkedin } from "react-icons/ai"
 export const Footer: React.FC = () => {
     return (
-        <section className="bg-[#060F42] py-4 px-6 flex flex-col items-center gap-2.5 ">
-            <div className="grid md:grid-cols-3 lg:grid-cols-3 gap-96 sm:gap-4 md:gap-0 lg:gap-8 xl:gap-96">
-                <div className="lg:ml-[0px] lg:flex flex-col gap-8 ml-[-100px] md:ml-[-25px]">
-                    <h2 className="text-[36px] font-semibold font-faustina text-white">HouseMarket</h2>
+        <section className="bg-[#060F42] py-8 px-6 flex flex-col items-center justify-center gap-2.5 w-full">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-16 lg:gap-80">
+                <div className="lg:flex flex-col gap-8">
+                    <h2 className="text-4xl font-semibold font-faustina text-white">HouseMarket</h2>
                     <div className="flex flex-col gap-4">
                         <p className="text-base font-medium uppercase text-white">Get In Touch</p>
                         <p className="text-white">Accra.</p>
@@ -20,9 +20,9 @@ export const Footer: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col gap-4 mt-[20px]">
-                    <p className="font-semibold uppercase text-primary text-[20px] text-white">About</p>
-                    <div className="mt-[30px] text-white ">
+                <div className="flex flex-col gap-4">
+                    <p className="font-semibold uppercase text-primary text-xl text-white">About</p>
+                    <div className="text-white ">
                         {aboutItems.map((item, index) => {
                             return (
                                 <p role="button" key={index}>{item.title}</p>
@@ -30,7 +30,7 @@ export const Footer: React.FC = () => {
                         })}
                     </div>
                 </div>
-                <div className="flex flex-col gap-8 mt-[20px] ">
+                <div className="flex flex-col gap-8">
                     <div className="flex flex-col gap-1">
                         <p className="text-xl text-primary text-white">Join our newsletter</p>
                         <p className="text-sm text-white">We'll send you a nice letter once per week.</p>
@@ -43,7 +43,7 @@ export const Footer: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <hr className="bg-gray-eee h-px w-full mt-[50px] [w-450px]" />
+            <hr className="bg-gray-eee h-px w-full [w-450px]" />
             <div className="flex justify-between items-center">
                 <div className="text-sm text-white">
                     <p className="ml-[-800px]">&copy; 2023 HouseMarket. All rights reserved.</p>
@@ -54,9 +54,7 @@ export const Footer: React.FC = () => {
                     <AiOutlineTwitter role="button" size={27} className="text-white" />
                     <AiFillLinkedin role="button" size={27} className="text-white" />
                 </div>
-                </div>
-
-
+            </div>
         </section>
     );
 }

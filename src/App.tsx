@@ -1,11 +1,13 @@
 // Import necessary components and libraries
 import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
-import { HomePage, PropertyListing, FAQs, Buy, Fav, PropertyDetails, MapInt, } from '@/features';
+import { HomePage, PropertyListing, FAQs, Buy, Fav, PropertyDetails, MapInt, Bookings, } from '@/features';
 import { Footer, Navbar, } from './components';
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <div className="m-0 p-0 flex w-screen min-h-screen ">
+      <ToastContainer></ToastContainer>
       <Router>
         <Routes>
           <Route path="/*" element={<MainLayout />} />
@@ -29,6 +31,7 @@ function MainLayout() {
           <Route path="/features/favourites" element={<Fav />} />
           <Route path="/features/propertyDetails" element={<PropertyDetails />} />
           <Route path="/features/map" element={<MapInt />} />
+          <Route path="/features/bookings" element={<Bookings />} />
         </Routes>
       </div>
       <Footer />
