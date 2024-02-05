@@ -44,11 +44,11 @@ export const Footer: React.FC = () => {
                 </div>
             </div>
             <hr className="bg-gray-eee h-px w-full [w-450px]" />
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center mt-[10px]">
                 <div className="text-sm text-white">
-                    <p className="ml-[-800px]">&copy; 2023 HouseMarket. All rights reserved.</p>
+                    <p className="ml-[-700px]">&copy; 2023 HouseMarket. All rights reserved.</p>
                 </div>
-                <div className="flex gap-4 mr-[-770px]">
+                <div className="flex gap-4 mr-[-670px]">
                     <AiFillFacebook role="button" size={27} className="text-white" />
                     <FiDribbble role="button" size={27} className="text-white" />
                     <AiOutlineTwitter role="button" size={27} className="text-white" />

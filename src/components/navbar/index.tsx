@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HiOutlineMenu, HiOutlineHeart } from 'react-icons/hi';
 import Modal from 'react-modal';
-import SignUpModal from '@/features/modals';
-import LoginModal from '@/features/modals2';
+import SignUpModal from '@/components/modals/signup';
+import LoginModal from '@/components/modals/signin';
 import NavbarModal from '@/features/hamburger';
 import { useNavigate } from 'react-router-dom';
 import { navbarItems } from '@/data/navItems';
 import { Link } from 'react-router-dom';
 import { useModalStore } from '@/store/store';
-import avatar from "@/assets/images/profile-image-placeholder.png";
+import avatar from "@/assets/images/profile.jpg";
 import { IoIosArrowDown } from "react-icons/io";
+import { userStore } from '@/store/userStore';
+import { userDetails } from '@/store/createUser';
+import { logoutApi } from '@/api/auth';
 
 Modal.setAppElement('#root'); // Set the root element for accessibility
 
@@ -24,6 +27,9 @@ export const Navbar = () => {
   const [isOptionsOpen, setOptionsOpen] = useState(false);
   const optionsRef = useRef(null);
 
+  // const { userData, logout } = userStore();
+  const { userData } = userStore();
+  const { userInfo } = userDetails();
 
   const handleOpenSignUpModal = () => setSignUpModalOpen(true);
   const handleCloseSignUpModal = () => setSignUpModalOpen(false);
@@ -51,14 +57,8 @@ export const Navbar = () => {
     setMobileModalOpen(!isMobileModalOpen);
   };
 
-  // Function to handle logout
   const handleLogout = () => {
-    // Remove user data from localStorage
-    localStorage.removeItem('user_key');
-    localStorage.removeItem('user_key_type');
-    localStorage.removeItem('user_email');
-    localStorage.removeItem('user_name');
-    localStorage.removeItem('user_img');
+    logoutApi();
     window.location.reload();
     // ...
   };
@@ -68,7 +68,6 @@ export const Navbar = () => {
   };
   
   const handleSettings = () => {
-    // Implement your settings logic here
     console.log('Settings clicked');
   };
 
@@ -118,18 +117,11 @@ export const Navbar = () => {
               />
             </div>
             
-            {localStorage.getItem('user_email')!==null ? (
+            {localStorage.getItem('user_name') !==null ? (
               <div className="flex items-center gap-3 text-sm">
-                {/* <button
-                  type="button"
-                  className="h-[45px] mr-[20px] border-2 border-red-500 uppercase py-1.5 rounded w-[100px] font-normal hover:bg-[#070058] hover:text-white transition-all duration-500"
-                  onClick={() => handleLogout()}
-                >
-                  Logout
-                </button> */}
                 <div className='flex justify-space-between gap-5 mr-[100px]'>
                   <div className='h-[30px] w-[30px] rounded-lg relative  border-2 border-solid border-[#070058]'>
-                    <img src={userprofilepic?.toString} alt="#" className='rounded-full cursor-pointer' onClick={toggleOptions} />
+                    <img src={avatar} alt="#" className='cursor-pointer' onClick={toggleOptions} />
                     {isOptionsOpen && (
                       <div className="absolute top-[25px] right-[-150px] bg-white border border-gray-200 rounded shadow-md">
                         <button onClick={() => handleLogout()} className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left">Logout</button>

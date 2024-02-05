@@ -29,7 +29,7 @@ function MainLayout() {
           <Route path="/features/faqs" element={<FAQs />} />
           <Route path="/features/buy" element={<Buy />} />
           <Route path="/features/favourites" element={<Fav />} />
-          <Route path="/features/propertyDetails" element={<PropertyDetails />} />
+          <Route path="/features/propertyDetails/:id" element={<PropertyDetails />} />
           <Route path="/features/map" element={<MapInt />} />
           <Route path="/features/bookings" element={<Bookings />} />
         </Routes>

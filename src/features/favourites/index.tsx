@@ -1,17 +1,32 @@
-// Fav.tsx
-import React, { useState } from 'react';
+
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import HouseCard from '@/components/housecards';
 import { houseData } from '@/data/housedata';
 import Switch from '@/components/switch'; // Adjust the path based on your project structure
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import moment from "moment";
+import { PropertyDetails } from "@/features/propertyDetails";
+import { usePropertyStore } from "@/store/store";
+import {useGetFavourites } from '@/store/favourites';
+import { useNavigate, Link } from "react-router-dom";
+import { RiMap2Line } from 'react-icons/ri';
+import { userActionsStore } from '@/store/userStore';
+import { deleteUser } from '@/api/user';
+
+
 
 const Fav: React.FC = () => {
   // State to keep track of the active tab
   const [activeTab, setActiveTab] = useState('favorites');
-
   // Function to handle tab clicks
   const handleTabClick = (tabId: string) => {
     setActiveTab(tabId);
   };
+
+  const userId = localStorage.getItem('user_id')
+  console.log(userId);
 
   // State for form fields
   const [formData, setFormData] = useState({
@@ -28,6 +43,26 @@ const Fav: React.FC = () => {
     });
   };
 
+  const navigate = useNavigate();
+  
+  const { favourites, fetchAndSetFavourites } = useGetFavourites();
+  const { deleteUser } = userActionsStore();
+
+
+  useEffect(() => {
+    fetchAndSetFavourites(userId);
+    console.log(favourites);
+  }, []);
+  
+  
+
+  const [selectedApartment, setSelectedApartment] = useState<string>('Select Apartment');
+
+  const handleApartmentChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedApartment(event.target.value);
+    // These variables need to be defined outside the function to be used in the MapComponent
+  };
+  
   // State for notification toggle 
   const [notificationEnabled, setNotificationEnabled] = useState(false);
   const [emailNotification, setEmailNotification] = useState(false);
@@ -35,6 +70,27 @@ const Fav: React.FC = () => {
   const [favNotification, setFavNotification] = useState(false);
   const [lastNotification, setLastNotification] = useState(false);
 
+  const handleDeactivateAccount = async (userId:string) => {
+    // try {
+    //   const apiUrl = import.meta.env.VITE_API_BASE_URL;
+    //   const response = await axios.delete(`${apiUrl}/user/{id}`);
+    //   console.log({response});
+    //   toast.success('Account deactivated successfully');
+    //   window.location.reload();
+    // } catch (error) {
+    //   toast.error('Error deactivating account');
+    //   console.error('Error deactivating account:', error);
+    // }
+    const { success, response } = await deleteUser(userId)
+    if (success){
+      toast.success('Account deactivated successfully');
+      // navigate("/")
+    }
+    else {
+      console.log(response);
+    }
+  };
+  
   return (
     <div className="w-full h-full bg-white p-4 mt-[100px] ml-[45px] ">
       {/* Grey line under tabs */}
@@ -73,8 +129,54 @@ const Fav: React.FC = () => {
       {/* Tab Contents */}
       {/* Favorites content */}
       <div id="content-favorites" className={`tab-content ${activeTab !== 'favorites' ? 'hidden' : ''}`}>
-        <p className='mb-[400px]'>You have no items in your Favourites.</p>
-      
+        <div className='hidden lg:block md:block lg:flex justify-self-start mt-[-160px]  lg:mt-[50px] mb-[20px] gap-4 md:flex flex-center md:mr-0'>
+          <div>
+            <h3 style={{ marginRight: 20 }} className="font-semibold mt-[10px]">Sorted By</h3>
+          </div>
+          <div>
+            <select
+              className="border rounded-md p-[12px] w-[200px]"
+              value={selectedApartment}
+              onChange={handleApartmentChange}
+            >
+              <option value="Select Apartment">Recommended</option>
+              <option value="Studio">Studio</option>
+              <option value="1 Bedroom">1 Bedroom</option>
+              <option value="2 Bedrooms">2 Bedrooms</option>
+            </select>
+          </div>
+          <Link to="/features/buy">
+            <div>
+              <button className='border rounded-md p-[12px] w-[150px] text-white' style={{ backgroundColor: '#070058' }}><RiMap2Line  className='text-white mb-[-25px]'/> Maps</button>
+            </div>
+          </Link>
+        </div>
+        <div id="content-favorites" className={`tab-content ${activeTab !== 'favorites' ? 'hidden' : ''}`}>
+          <div className='hidden lg:block md:block lg:flex justify-self-start mt-[-160px]  lg:mt-[50px] mb-[20px] gap-4 md:flex flex-center md:mr-0'>
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 px-4 sm:px-6 md:px-8 lg:px-12 lg:mt-[10px] mt-[-40px]" onClick={PropertyDetails}>
+              {/* Display a message when there are no liked items */}
+              {favourites?.length === 0 ? (
+                <p className='mb-[400px] mt-[100px]'>You have no items in your Favourites.</p>
+              ) : (
+                // Map through the liked items and display HouseCard components
+                favourites?.map((favourites:any) => {
+                  return (
+                    favourites && (
+                      <HouseCard
+                        key={favourites.id}
+                        imageSrc={favourites.images[0].file_content}
+                        streetName={favourites.streetName}
+                        price={favourites.price}
+                        bed={favourites.bed}
+                        created_at={moment(favourites.created_at).fromNow()}
+                      />
+                    )
+                  );
+                })
+              )}
+            </div>
+          </div>
+        </div>
       </div>
       {/* Account content */}
       <div id="content-account" className={`tab-content ${activeTab !== 'account' ? 'hidden' : ''}`}>
@@ -159,7 +261,7 @@ const Fav: React.FC = () => {
             <p className='lg:text-gray-400 md:text-gray-400 md:w-[400px]' >This will shut down your account, but retain your information. You won't be able to sign in again until your account is reactivated.</p>
           </div>
           <div>
-            <button className='lg:ml-[480px] font-bold text-[#070058] mt-[70px] md:ml-[-390px]'>Deactivate account</button>
+            <button onClick={() => handleDeactivateAccount(userId)} className='lg:ml-[480px] font-bold text-[#070058] mt-[70px] md:ml-[-390px]'>Deactivate account</button>
           </div>
         </div>
         <div className='flex justify space between gap-[1100px] border-b border-gray-300 mb-[100px]'>

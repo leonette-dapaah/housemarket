@@ -125,7 +125,7 @@ const Dropdown2: React.FC = () => {
         >
           SEARCH
         </button>
-        <button className='md:mr-[-280px] lg:mr-0 bg-white lg:w-[175px] md:w-[200px] h-[50px] text-[#060F42] font-semibold text-md border-2 border-[#070058] rounded cursor-pointer mt-32px lg:ml-20px mt-[20px]'>
+        <button className='md:mr-[-280px] lg:mr-0 bg-white lg:w-[175px] md:w-[200px] h-[50px] text-[#060F42] font-semibold text-md border border-[#070058] rounded cursor-pointer mt-32px lg:ml-20px mt-[20px]'>
             MORE FILTERS
         </button>
       </div>

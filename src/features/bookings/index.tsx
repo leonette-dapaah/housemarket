@@ -1,12 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import BookingCard from "@/components/bookingcards";
+import { Link } from "react-router-dom";
 import icon from '@/assets/images/bookingImg.jpg';
+import { usePropertyStore } from "@/store/store";
+import { useBookingStore } from "@/store/createTour";
 
 const Bookings: React.FC = () => {
   const [activeTab, setActiveTab] = useState("incoming");
 
+
   const handleTabClick = (tabId: string) => {
     setActiveTab(tabId);
   };
+
+
+  const { properties, fetchAndSetProperties } = usePropertyStore();
+  const { bookings, fetchAndSetBookings } = useBookingStore();
+
+  useEffect(() => {
+    fetchAndSetProperties();
+  }, []);
+
+  useEffect(() => {
+    fetchAndSetBookings();
+  }, []);
+  console.log(bookings);
+  
 
   return (
     <div className="w-full h-full bg-white p-4 mt-[60px] ml-[45px]">
@@ -52,13 +71,28 @@ const Bookings: React.FC = () => {
       <div
         id="content-incoming"
         className={`tab-content ${activeTab !== "incoming" ? "hidden" : ""}`}
-      >
-        <div className="flex items-center justify-center mb-[-160px]">
+      > 
+        {bookings && bookings.length > 0 ? (
           <div>
-            <img src={icon} alt="#" className="w-[250px] h-[300px] mx-auto" />
-            <p className="mb-[400px]">Sorry! You have no booking at the moment. Go to the Rent section to start.</p>
+            {bookings.map((booking, index:number) => {
+              return (
+                <BookingCard 
+                streetName={""}
+                price={""}
+                date={booking.tour_date_time}
+                status={""}
+                />
+              )
+            })}
           </div>
-        </div>
+        ) : (
+          <div className="flex items-center justify-center mb-[-160px]">
+            <div>
+              <img src={icon} alt="#" className="w-[250px] h-[300px] mx-auto" />
+              <p className="mb-[400px]">Sorry! You have no booking at the moment. Go to the Rent section to start.</p>
+            </div>
+          </div>
+        )}
       </div>
       {/* Completed content */}
       <div
@@ -68,7 +102,7 @@ const Bookings: React.FC = () => {
         <div className="flex items-center justify-center mb-[-160px]">
           <div>
             <img src={icon} alt="#" className="w-[250px] h-[300px] mx-auto" />
-            <p className="mb-[400px]">Sorry! You have no booking at the moment. Go to the Rent section to start.</p>
+            <p className="mb-[400px]">Sorry! You have no completed bookings at the moment. Go to the Rent section to start.</p>
           </div>
         </div>
       </div>
@@ -80,7 +114,7 @@ const Bookings: React.FC = () => {
         <div className="flex items-center justify-center mb-[-160px]">
           <div>
             <img src={icon} alt="#" className="w-[250px] h-[300px] mx-auto" />
-            <p className="mb-[400px]">Sorry! You have no booking at the moment. Go to the Rent section to start.</p>
+            <p className="mb-[400px]">Sorry! You have no cancelled bookings at the moment. Go to the Rent section to start.</p>
           </div>
         </div>
       </div>

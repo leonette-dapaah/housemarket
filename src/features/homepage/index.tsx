@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import houseImg from "@/assets/images/homepage.jpg";
 import Dropdown from "@/components/dropdown";
 import HouseCard from "@/components/housecards";
@@ -10,15 +10,48 @@ import { Link } from "react-router-dom";
 import { PropertyDetails } from "@/features/propertyDetails";
 import { usePropertyStore } from "@/store/store";
 import moment from "moment";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { usePostFavourite } from "@/store/favourites";
+
 
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const { properties, fetchAndSetProperties } = usePropertyStore();
-
+  const { addFavourite } = usePostFavourite();
   useEffect(() => {
     fetchAndSetProperties();
   }, []);
+
+  // const { favouriteItems, addToFavorites } = useFavouritesStore();
+
+  // const handleAddToFavourites = (itemId: string) => {
+  //   addToFavourites(itemId);
+  // };
+  
+   const [likedItems, setLikedItems] = useState<string[]>([]);
+  
+  const userId = localStorage.getItem('user_id')
+  const handleLikeClick = async (itemId: string) => {
+    const response = await addFavourite(itemId, userId);
+    console.log(response);
+    // Toggle liked status for the item with itemId
+    setLikedItems((prevLikedItems:any) =>
+      prevLikedItems.includes(itemId)
+        ? prevLikedItems.filter((id:any) => id !== itemId)
+        : [...prevLikedItems, itemId]
+    );
+  };
+
+  // useEffect(() => {
+  //   AOS.init({
+  //     duration: 1200,
+  //     easing: 'ease-in-out',
+  //     offset: 200,
+  //     once: true, // Animation only occurs once
+  //   });
+  // }, []);
   
   return (
     <div className="w-full h-full grid gap-24">
@@ -44,27 +77,29 @@ const Home: React.FC = () => {
           <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 px-4 sm:px-6 md:px-8 lg:px-12 lg:mt-[-50px] mt-[-40px]" onClick={PropertyDetails}>
             {properties.map((house, index: number) => {
               return (
-                <Link to="/features/propertyDetails" >
+                <Link to={`/features/propertyDetails/${house.id}`}>
                   <HouseCard
                     key={index}
-                    imageSrc={house?.imageSrc}
-                    streetName={house?.streetName}
+                    imageSrc={house?.images[0].file_content}
+                    streetName={house.gps_address + ", "+ house.location}
                     price={house.price}
                     bed={house?.bed}
                     created_at={moment(house.created_at).fromNow()}
+                    isLiked={likedItems.includes(house.id)}
+                   onClick={() => handleLikeClick(house.id)}
                   />
                 </Link>
               )
             })}
-            <Link to="/features/buy">
-              <button className="mx-auto flex items-center justify-center mt-[-40px] bg-[#060F42] text-white text-[16px] p-5 rounded-lg">VIEW MORE</button>
-            </Link>
           </div>
         ) : ( 
           <div className="flex justify-center items-center">
             <p>Sorry! There are no properties listed.</p>
           </div>
         )}       
+        <Link to="/features/buy">
+            <button className="mx-auto flex items-center justify-center mt-[-40px] bg-[#060F42] text-white text-[16px] p-5 rounded-lg">VIEW MORE</button>
+        </Link>
       </div>
       <div className="relative flex flex-col lg:ml-[700px] lg:mt-[100px]">
         <img src={houseImage} alt="house" className="w-full lg:w-1/2 h-[500px] lg:ml-[-300px]" />
@@ -91,3 +126,7 @@ const Home: React.FC = () => {
 }
 
 export default Home;
+
+// function useFavouritesStore(): { favouriteItems: any; addToFavorites: any; } {
+//   throw new Error("Function not implemented.");
+// }

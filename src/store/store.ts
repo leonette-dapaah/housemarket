@@ -18,25 +18,32 @@ export const useModalStore = create<ModalStore>((set) => ({
 
 type PropertyType = Record<string, any>;
 
-interface PropertyStoreInterface{
-    properties: PropertyType[];
-    setProperties: (properties: PropertyType[]) => void;
-    fetchAndSetProperties: () => Promise<void>;
+interface PropertyStoreInterface {
+  properties: PropertyType[];
+  setProperties: (properties: PropertyType[]) => void;
+  fetchAndSetProperties: () => Promise<void>;
+  // Correct the function name to 'likeProperty'
+  likeProperty: (propertyId: string) => void;
 }
 
 export const usePropertyStore = create<PropertyStoreInterface>((set) => ({
-    properties: [],
-    setProperties: (properties) => set({ properties }),
-    fetchAndSetProperties: async () => {
-        console.log("fetchAndSetProperties called");
-        try { 
-            const propertiesResponse = await fetchProperties();
-            set({ properties: propertiesResponse });
-        }
-        catch(e) {
-            console.log(e);
-            throw e;
-        }
+  properties: [],
+  setProperties: (properties) => set({ properties }),
+  fetchAndSetProperties: async () => {
+    console.log("fetchAndSetProperties called");
+    try { 
+      const propertiesResponse = await fetchProperties();
+      set({ properties: propertiesResponse });
     }
-}))
+    catch(e) {
+      console.log(e);
+      throw e;
+    }
+  },
+  // Implement the likeProperty function
+  likeProperty: (propertyId) => {
+    // Implement the logic for liking a property
+    console.log(`Property liked: ${propertyId}`);
+  },
+}));
 

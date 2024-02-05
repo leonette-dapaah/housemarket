@@ -2,9 +2,12 @@ import React from "react";
 import Dropdown2 from '@/components/dropdown2';
 import HouseCard from '@/components/housecards';
 import {  houseData } from '@/data/housedata';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import { RiMap2Line } from "react-icons/ri";
+import { PropertyDetails } from "@/features/propertyDetails";
+import { usePropertyStore } from "@/store/store";
 import { Link } from 'react-router-dom';
+import moment from "moment";
 
 
 const Buy: React.FC = () => {
@@ -13,6 +16,14 @@ const Buy: React.FC = () => {
   const handleApartmentChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedApartment(event.target.value);
   };
+
+  const { properties, fetchAndSetProperties } = usePropertyStore();
+
+  useEffect(() => {
+    fetchAndSetProperties();
+  }, []);
+
+
     return (
         <div className="mt-[380px] md:mt-[560px]">
             <Dropdown2 />
@@ -22,7 +33,7 @@ const Buy: React.FC = () => {
               </div>
               <div>
                 <select
-                  className="dropdown-select border rounded-md p-[12px] w-[200px]"
+                  className="border rounded-md p-[12px] w-[200px]"
                   value={selectedApartment}
                   onChange={handleApartmentChange}
                 >
@@ -53,15 +64,20 @@ const Buy: React.FC = () => {
               </div>
             </div>
             <div className='grid lg:grid-cols-3 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 px-4 sm:px-6 md:px-8 lg:px-12 lg:mt-[170px] md:mt-[170px] mt-[-40px]" onClick={PropertyDetails}'>
-            {houseData.map((house, index: number) => (
+            {properties.map((house, index: number) => (
             <Link to="/features/propertyDetails" >
               <HouseCard
                 key={index}
-                imageSrc={house.imageSrc}
-                streetName={house.streetName}
+                imageSrc={house.images[0].file_content}
+                streetName={house.gps_address + ", "+ house.location}
                 price={house.price}
-                bed={house.bed}
+                bed={house.
+                  number_of_rooms
+                  }
                 created_at={house.postedTime}
+                baths={house.
+                  number_of_baths
+                  }
               />
             </Link>
           ))}

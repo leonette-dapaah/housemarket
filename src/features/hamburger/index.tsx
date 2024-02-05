@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { HiOutlineX, HiOutlineHeart } from 'react-icons/hi';
 import { navbarItems } from '@/data/navItems';
 import { Link, useNavigate } from 'react-router-dom';
-import SignUpModal from '@/features/modals';
-import LoginModal from '@/features/modals2';
+import SignUpModal from '@/components/modals/signup';
+import LoginModal from '@/components/modals/signin';
 
 interface NavbarModalProps {
   isOpen: boolean;
