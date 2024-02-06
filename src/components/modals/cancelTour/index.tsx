@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { IoClose } from "react-icons/io5";
 
 
 interface CancelTourProps {
@@ -24,19 +25,31 @@ const cancelTour: React.FC<CancelTourProps> = ({ isOpen, onClose }) => {
         };
       }, [isOpen, onClose]);
     
+      const handleCloseModal = (e: React.MouseEvent) => {
+        // Check if the click occurred outside the modal content
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      };
+    
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center ${
+        onClick={handleCloseModal} className={`fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center z-10 ${
         isOpen ? 'block' : 'hidden'
       }`}
     >
-      <div className="bg-white p-8 w-[500px] h-1/2 mt-[200px] z-3">
-        <h1 className='text-center text-060F42'>Cancel Tour</h1>
-        <p>You are about to cancel this tour appointment. Please be sure before doing so.</p>
-        <div className='mt-[40px] flex gap-3'>
-          <button className='bg-white p-3 w-[170px] rounded-md text-[#060F42] font-semibold border border-[#060F42]'>NO, DON'T CANCEL</button>
-          <button  className='bg-red-500  p-3 w-[370px] rounded-md text-white font-semibold'>YES, CANCEL IT</button>
+      <div className="bg-white p-10 w-[550px] h-[320px] mt-[0px] z-3 rounded-xl">
+        <div className='flex justify-space-between'>
+          <h1 className='text-center text-060F42 text-[30px] font-faustina'>Cancel Tour</h1>
+          <div className='bg-gray-200 rounded-md ml-[290px] w-[30px] h-[30px] p-1'>
+            <IoClose  size={21} role="button" onClick={onClose}/>
+          </div>
+        </div>
+        <p className='text-center mt-[50px]'>You are about to cancel this tour appointment. Please be sure before doing so.</p>
+        <div className='mt-[60px] flex gap-3'>
+          <button className='bg-white p-3 w-[250px] h-[50px] rounded-md text-[#060F42] font-semibold border border-[#060F42]' onClick={onClose}>NO, DON'T CANCEL</button>
+          <button  className='bg-red-500  p-3 w-[250px] rounded-md text-white font-semibold' onClick={onClose} >YES, CANCEL IT</button>
         </div>
       </div>
     </div>

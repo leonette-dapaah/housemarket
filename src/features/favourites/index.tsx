@@ -14,6 +14,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { RiMap2Line } from 'react-icons/ri';
 import { userActionsStore } from '@/store/userStore';
 import { deleteUser } from '@/api/user';
+import DeactivateAccount from "@/components/modals/deactivateAccount";
+
 
 
 
@@ -25,8 +27,8 @@ const Fav: React.FC = () => {
     setActiveTab(tabId);
   };
 
-  const userId = localStorage.getItem('user_id')
-  console.log(userId);
+  // const userId = localStorage.getItem('user_id')
+  // console.log(userId);
 
   // State for form fields
   const [formData, setFormData] = useState({
@@ -46,7 +48,7 @@ const Fav: React.FC = () => {
   const navigate = useNavigate();
   
   const { favourites, fetchAndSetFavourites } = useGetFavourites();
-  const { deleteUser } = userActionsStore();
+  // const { deleteUser } = userActionsStore();
 
 
   useEffect(() => {
@@ -70,26 +72,40 @@ const Fav: React.FC = () => {
   const [favNotification, setFavNotification] = useState(false);
   const [lastNotification, setLastNotification] = useState(false);
 
-  const handleDeactivateAccount = async (userId:string) => {
-    // try {
-    //   const apiUrl = import.meta.env.VITE_API_BASE_URL;
-    //   const response = await axios.delete(`${apiUrl}/user/{id}`);
-    //   console.log({response});
-    //   toast.success('Account deactivated successfully');
-    //   window.location.reload();
-    // } catch (error) {
-    //   toast.error('Error deactivating account');
-    //   console.error('Error deactivating account:', error);
-    // }
-    const { success, response } = await deleteUser(userId)
-    if (success){
-      toast.success('Account deactivated successfully');
-      // navigate("/")
-    }
-    else {
-      console.log(response);
-    }
+  const [isDeactivateAccountOpen, setDeactivateAccountOpen] = useState(false);
+
+  const handleOpenDeactivateAccount = () => {
+    setDeactivateAccountOpen(true);
   };
+
+  const handleCloseDeactivateAccount = () => {
+    setDeactivateAccountOpen(false);
+  };
+
+  const userId = localStorage.getItem('user_id')
+  console.log(userId);
+
+
+  // const handleDeactivateAccount = async (userId:string) => {
+  //   // try {
+  //   //   const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  //   //   const response = await axios.delete(`${apiUrl}/user/{id}`);
+  //   //   console.log({response});
+  //   //   toast.success('Account deactivated successfully');
+  //   //   window.location.reload();
+  //   // } catch (error) {
+  //   //   toast.error('Error deactivating account');
+  //   //   console.error('Error deactivating account:', error);
+  //   // }
+  //   const { success, response } = await deleteUser(userId)
+  //   if (success){
+  //     toast.success('Account deactivated successfully');
+  //     // navigate("/")
+  //   }
+  //   else {
+  //     console.log(response);
+  //   }
+  // };
   
   return (
     <div className="w-full h-full bg-white p-4 mt-[100px] ml-[45px] ">
@@ -152,7 +168,7 @@ const Fav: React.FC = () => {
           </Link>
         </div>
         <div id="content-favorites" className={`tab-content ${activeTab !== 'favorites' ? 'hidden' : ''}`}>
-          <div className='hidden lg:block md:block lg:flex justify-self-start mt-[-160px]  lg:mt-[50px] mb-[20px] gap-4 md:flex flex-center md:mr-0'>
+          <div className='hidden lg:block md:block lg:flex justify-self-start mt-[-160px]  lg:mt-[50px] mb-[20px] gap-4 md:flex flex-center md:mr-0 ml-[-50px]'>
             <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 px-4 sm:px-6 md:px-8 lg:px-12 lg:mt-[10px] mt-[-40px]" onClick={PropertyDetails}>
               {/* Display a message when there are no liked items */}
               {favourites?.length === 0 ? (
@@ -261,7 +277,7 @@ const Fav: React.FC = () => {
             <p className='lg:text-gray-400 md:text-gray-400 md:w-[400px]' >This will shut down your account, but retain your information. You won't be able to sign in again until your account is reactivated.</p>
           </div>
           <div>
-            <button onClick={() => handleDeactivateAccount(userId)} className='lg:ml-[480px] font-bold text-[#070058] mt-[70px] md:ml-[-390px]'>Deactivate account</button>
+            <button onClick={handleOpenDeactivateAccount} className='lg:ml-[480px] font-bold text-red-500 mt-[70px] md:ml-[-390px]'>Deactivate account</button>
           </div>
         </div>
         <div className='flex justify space between gap-[1100px] border-b border-gray-300 mb-[100px]'>
@@ -329,6 +345,7 @@ const Fav: React.FC = () => {
           </div>
         </div>
       </div>
+      <DeactivateAccount isOpen={isDeactivateAccountOpen} onClose={handleCloseDeactivateAccount} />
     </div>
   );
 };

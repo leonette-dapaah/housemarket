@@ -60,10 +60,14 @@ a:hover {
   padding-bottom: 3px;
 }
 
-/* a:active {
-  border-bottom: 2px solid #747bff;
-  padding-bottom: 3px;
-} */
+a:visited {
+  text-decoration: underline red;
+}
+
+.nav-link:focus,
+.nav-link:active {
+  text-decoration: underline red;
+}
 
 h1 {
   font-size: 3.2em;

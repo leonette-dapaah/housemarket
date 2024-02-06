@@ -109,12 +109,15 @@ export const Navbar = () => {
                 <span className="font-[550] uppercase">{item.title}</span>
               </Link>
             ))}
-            <div className="px-2">
+            <div className="px-2 flex justify-space-between">
               <HiOutlineHeart
                 role="button"
                 size={28}
                 onClick={() => navigate('/features/favourites')}
               />
+              <div className='bg-red-600 w-[22px] h-[22px] rounded-full ml-[-10px] mt-[-5px] cursor-pointer' onClick={() => navigate('/features/favourites')}>
+                <p className='text-white font-bold flex justify-center items-center'>2</p>
+              </div>
             </div>
             
             {localStorage.getItem('user_name') !==null ? (

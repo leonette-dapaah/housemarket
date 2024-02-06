@@ -13,10 +13,21 @@ import moment from "moment";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { usePostFavourite } from "@/store/favourites";
+import { PuffLoader } from "react-spinners";
 
 
 
 const Home: React.FC = () => {
+  const [loader , setLoader] = useState(false);
+  useEffect(() => {
+    setLoader(true)
+    setTimeout(() => {
+      setLoader(false)
+      
+    }, 0.1)
+
+  }, [])
+
   const navigate = useNavigate();
   const { properties, fetchAndSetProperties } = usePropertyStore();
   const { addFavourite } = usePostFavourite();
@@ -93,7 +104,7 @@ const Home: React.FC = () => {
             })}
           </div>
         ) : ( 
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center mb-[60px]">
             <p>Sorry! There are no properties listed.</p>
           </div>
         )}       
@@ -126,7 +137,3 @@ const Home: React.FC = () => {
 }
 
 export default Home;
-
-// function useFavouritesStore(): { favouriteItems: any; addToFavorites: any; } {
-//   throw new Error("Function not implemented.");
-// }

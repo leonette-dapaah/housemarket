@@ -6,3 +6,4 @@ export { default as Fav } from "./favourites"
 export { default as PropertyDetails } from "./propertyDetails"
 export { default as MapInt } from "./map"
 export { default as Bookings } from "./bookings";
+export { default as WelcomePage } from "./welcome";
