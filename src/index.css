@@ -23,21 +23,50 @@
   scrollbar-width: none;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  margin: 0;
+  padding: 0;
 }
 
 body {
   margin: 0;
   display: flex;
   place-items: center;
+  flex-direction: column; 
+  align-items: stretch; 
   min-width: 320px;
   min-height: 100vh;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+a {
+  font-weight: 100;
+  color: #070058;
+  text-decoration: inherit;
+  font-size: 20px;
+  margin-left: 25px;
+  margin-left: 25px;
+  transition: 0.1s;
+}
+a:hover {
+  color: #535bf2;
+  border-bottom: 2px solid #747bff;
+  padding-bottom: 3px;
+}
+
+a:visited {
+  text-decoration: underline red;
+}
+
+.nav-link:focus,
+.nav-link:active {
+  text-decoration: underline red;
 }
 
 h1 {
@@ -45,7 +74,11 @@ h1 {
   line-height: 1.1;
 }
 
-button {
+.tab:focus {
+  outline: none;
+}
+
+/* button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -54,11 +87,14 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
+  transition: 0.5s;
+} */
+
+/* button:hover {
+  color: white;
+  background-color: #070058;
+} */
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -68,6 +104,7 @@ button:focus-visible {
   :root {
     color: #213547;
     background-color: #ffffff;
+
   }
   a:hover {
     color: #747bff;
